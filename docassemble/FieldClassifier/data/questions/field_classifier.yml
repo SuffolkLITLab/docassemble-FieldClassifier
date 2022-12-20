@@ -1,0 +1,41 @@
+---
+include:
+  - docassemble.AssemblyLine:assembly_line.yml
+  - docassemble.MassAccess:massaccess.yml
+---
+imports:
+  - random
+---
+modules:
+  - .pdf_field_images
+---
+objects:
+  - form_library: DACloudStorage.using(provider='s3', config='form explorer s3')
+  - test_pdf: DAStaticFile.using(filename="test.pdf")
+  - pdf_viewer: PDFFieldViewer.using(filename=test_pdf.path())
+---
+code: |
+  all_files = template_cloud.bucket.objects.all()
+comment: |
+  pick a specific file
+  get the fields from the file
+  for each field, get an image that shows it in context
+---
+id: interview order
+mandatory: True
+code: |
+  intro
+  results
+---
+continue button field: intro
+question: |
+---
+event: results
+question: |
+  Here are the results
+subquestion: |
+  <img src="${ url_action("image_action") }"/>
+---
+event: image_action
+code: |
+  response(binaryresponse=pdf_viewer.fields[0]["image"], content_type="image/png")
