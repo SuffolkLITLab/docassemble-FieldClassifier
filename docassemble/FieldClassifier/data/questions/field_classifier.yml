@@ -35,7 +35,7 @@ id: "here are the results"
 question: |
   Here are the results
 subquestion: |
-  <img src="${ url_action("image_action") }"/>
+  <img src="${ url_action("image_action") }" alt="the full form of a Massachusetts Appeals Court Civil Docketing Statement"/>
 ---
 event: image_action
 code: |
